@@ -1,5 +1,7 @@
 package com.goinghugh.dbmock.model;
 
+import com.goinghugh.dbmock.Generator;
+
 import java.sql.ResultSet;
 import java.util.StringJoiner;
 
@@ -32,6 +34,12 @@ public class Column {
     private String remarks;
 
     private Boolean autoincrement;
+
+    private Generator<?> generator;
+
+    public Class getJavaType() {
+        return JdbcTypeEnum.getJavaType(typeName);
+    }
 
     public Boolean getAutoincrement() {
         return autoincrement;
@@ -121,6 +129,14 @@ public class Column {
         this.remarks = remarks;
     }
 
+    public Generator getGenerator() {
+        return generator;
+    }
+
+    public void setGenerator(Generator generator) {
+        this.generator = generator;
+    }
+
     @Override
     public String toString() {
         return new StringJoiner(", ", Column.class.getSimpleName() + "[", "]")
@@ -134,7 +150,8 @@ public class Column {
                 .add("decimalDigit=" + decimalDigit)
                 .add("nullable=" + nullable)
                 .add("remarks='" + remarks + "'")
-                .add("autoincrement='" + autoincrement + "'")
+                .add("autoincrement=" + autoincrement)
+                .add("generator=" + generator)
                 .toString();
     }
 }

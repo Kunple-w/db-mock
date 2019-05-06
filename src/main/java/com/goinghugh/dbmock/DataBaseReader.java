@@ -2,6 +2,8 @@ package com.goinghugh.dbmock;
 
 import com.goinghugh.dbmock.constant.DatabaseConst;
 import com.goinghugh.dbmock.model.Column;
+import com.goinghugh.dbmock.model.TableStructure;
+import com.sun.tools.corba.se.idl.toJavaPortable.StringGen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,9 +24,18 @@ public class DataBaseReader {
     static final String USER = "root";
     static final String PASS = "qwe122";
 
-    public List<Column> getAllColumn(Connection conn, String schemaName, String tableNamePattern) throws SQLException {
+    public TableStructure getTableStructure(Connection conn, String schemaNamePattern, String tableNamePattern) {
+        try {
+            List<Column> columns = getAllColumn(conn, schemaNamePattern, tableNamePattern);
+            return new TableStructure(schemaNamePattern, tableNamePattern, columns);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Column> getAllColumn(Connection conn, String schemaNamePattern, String tableNamePattern) throws SQLException {
         DatabaseMetaData metaData = conn.getMetaData();
-        ResultSet rs = metaData.getColumns(null, schemaName, tableNamePattern, null);
+        ResultSet rs = metaData.getColumns(null, schemaNamePattern, tableNamePattern, null);
         List<Column> columns = new ArrayList<>();
         Column column;
         while (rs.next()) {
@@ -40,23 +51,36 @@ public class DataBaseReader {
             column.setNullable("1".equals(rs.getString(DatabaseConst.NULLABLE)));
             column.setAutoincrement("YES".equals(rs.getString(DatabaseConst.IS_AUTOINCREMENT)));
             column.setRemarks(rs.getString(DatabaseConst.REMARKS));
+
             String colName = rs.getString("COLUMN_NAME");
-            System.out.println("==============" + colName + "===============");
-            System.out.println("Column Name: " + colName);
-            System.out.println("Column Type: " + rs.getString("DATA_TYPE"));
-            System.out.println("Column Type Name: " + rs.getString("TYPE_NAME"));
-            System.out.println("Column Size: " + rs.getString("COLUMN_SIZE"));
-            System.out.println("Column Decimal Digits: " + rs.getString("DECIMAL_DIGITS"));
-            System.out.println("Column Nullable: " + rs.getString("NULLABLE"));
+            if (logger.isDebugEnabled()) {
+                System.out.println("==============" + colName + "===============");
+                System.out.println("Column Name: " + colName);
+                System.out.println("Column Type: " + rs.getString("DATA_TYPE"));
+                System.out.println("Column Type Name: " + rs.getString("TYPE_NAME"));
+                System.out.println("Column Size: " + rs.getString("COLUMN_SIZE"));
+                System.out.println("Column Decimal Digits: " + rs.getString("DECIMAL_DIGITS"));
+                System.out.println("Column Nullable: " + rs.getString("NULLABLE"));
+            }
             columns.add(column);
         }
         return columns;
     }
 
+    public static Connection getConn() {
+        try {
+            return DriverManager.getConnection(DB_URL, USER, PASS);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void main(String[] args) throws SQLException {
         Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
         DataBaseReader dataBaseReader = new DataBaseReader();
-        dataBaseReader.getAllColumn(connection, "blog", "student").forEach(s -> logger.debug("{}", s));
+        TableStructure structure = dataBaseReader.getTableStructure(connection, "blog", "student");
+        logger.info("表结构为: {}", structure);
+        logger.info("生成的创建sql为: {}", structure.getCreateSql());
 
     }
 }
