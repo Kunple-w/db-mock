@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 public class TableStructure {
 
     private static Pattern pattern = Pattern.compile("\\((.*?)\\)");
+
     private String schemaName;
 
     private String tableName;

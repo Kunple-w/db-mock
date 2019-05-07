@@ -1,4 +1,4 @@
-package com.goinghugh.dbmock;
+package com.goinghugh.dbmock.generator;
 
 /**
  * 生成器接口
@@ -16,4 +16,8 @@ public interface Generator<G> {
      * @date 2019/5/5 下午9:38
      */
     G next();
+
+    void setMax(int max);
+
+    void setMin(int min);
 }

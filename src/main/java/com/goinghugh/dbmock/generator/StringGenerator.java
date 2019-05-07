@@ -1,4 +1,4 @@
-package com.goinghugh.dbmock;
+package com.goinghugh.dbmock.generator;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -12,20 +12,19 @@ public class StringGenerator implements Generator<String> {
     private Integer min;
     private Integer max;
 
-    public StringGenerator(Integer min, Integer max) {
-        this.min = min;
-        this.max = max;
-    }
-
     @Override
     public String next() {
         return RandomStringUtils.randomAlphabetic(min, max);
     }
 
-    public static void main(String[] args) {
-        Generator<String> generator = new StringGenerator(10, 20);
-        for (int i = 0; i < 10; i++) {
-            System.out.println(generator.next());
-        }
+    @Override
+    public void setMax(int max) {
+        this.max = max;
+
+    }
+
+    @Override
+    public void setMin(int min) {
+        this.min = min;
     }
 }

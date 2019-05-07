@@ -27,6 +27,7 @@ public class DataBaseReader {
     public TableStructure getTableStructure(Connection conn, String schemaNamePattern, String tableNamePattern) {
         try {
             List<Column> columns = getAllColumn(conn, schemaNamePattern, tableNamePattern);
+            columns.forEach(column -> ColumnUtils.autoGenerator(column));
             return new TableStructure(schemaNamePattern, tableNamePattern, columns);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -41,7 +42,6 @@ public class DataBaseReader {
         while (rs.next()) {
             column = new Column();
             column.setTableName(rs.getString(DatabaseConst.TABLE_NAME));
-            column.setResultSet(rs);
             column.setColumnName(rs.getString(DatabaseConst.COLUMN_NAME));
             column.setJdbcType(rs.getString(DatabaseConst.DATA_TYPE));
             column.setTypeName((rs.getString(DatabaseConst.TYPE_NAME)));

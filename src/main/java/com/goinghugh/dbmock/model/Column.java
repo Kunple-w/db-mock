@@ -1,8 +1,7 @@
 package com.goinghugh.dbmock.model;
 
-import com.goinghugh.dbmock.Generator;
+import com.goinghugh.dbmock.generator.Generator;
 
-import java.sql.ResultSet;
 import java.util.StringJoiner;
 
 /**
@@ -14,8 +13,6 @@ import java.util.StringJoiner;
 public class Column {
 
     private String tableName;
-
-    private ResultSet resultSet;
 
     private String columnName;
 
@@ -55,14 +52,6 @@ public class Column {
 
     public void setTableName(String tableName) {
         this.tableName = tableName;
-    }
-
-    public ResultSet getResultSet() {
-        return resultSet;
-    }
-
-    public void setResultSet(ResultSet resultSet) {
-        this.resultSet = resultSet;
     }
 
     public String getColumnName() {
@@ -141,7 +130,6 @@ public class Column {
     public String toString() {
         return new StringJoiner(", ", Column.class.getSimpleName() + "[", "]")
                 .add("tableName='" + tableName + "'")
-                .add("resultSet=" + resultSet)
                 .add("columnName='" + columnName + "'")
                 .add("jdbcType='" + jdbcType + "'")
                 .add("dataType=" + dataType)
