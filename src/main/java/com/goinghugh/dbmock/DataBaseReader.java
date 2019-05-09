@@ -78,7 +78,7 @@ public class DataBaseReader {
     public static void main(String[] args) throws SQLException {
         Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
         DataBaseReader dataBaseReader = new DataBaseReader();
-        TableStructure structure = dataBaseReader.getTableStructure(connection, "blog", "student");
+        TableStructure structure = dataBaseReader.getTableStructure(connection, "blog", "");
         logger.info("表结构为: {}", structure);
         logger.info("生成的创建sql为: {}", structure.getCreateSql());
 

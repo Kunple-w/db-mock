@@ -24,6 +24,7 @@ public class SimpleMockWriter implements MockWriter {
     @Override
     public int write(TableStructure structure, int num) {
         String createSql = structure.getCreateSql();
+        logger.info("sql : {}", createSql);
         List<Object[]> batchArgs = new ArrayList<>();
         for (int i = 0; i < num; i++) {
             Object[] objects = genRow(structure);
@@ -50,7 +51,8 @@ public class SimpleMockWriter implements MockWriter {
         SimpleMockWriter simpleMockWriter = new SimpleMockWriter();
 
         logger.info("开始插入数据");
-        simpleMockWriter.write(dataBaseReader.getTableStructure(conn, "blog", "student"), 10000);
+        simpleMockWriter.write(dataBaseReader.getTableStructure(conn, "blog", "django_admin_log"), 100);
+//        simpleMockWriter.write(dataBaseReader.getTableStructure(conn, "blog", "student"), 100);
     }
 
     public Object[] genRow(TableStructure structure) {

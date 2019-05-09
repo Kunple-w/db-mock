@@ -65,7 +65,7 @@ public class DbWriter {
     public static void main(String[] args) throws SQLException {
         Connection conn = DataBaseReader.getConn();
         DataBaseReader dataBaseReader = new DataBaseReader();
-        TableStructure structure = dataBaseReader.getTableStructure(conn, "blog", "student");
+        TableStructure structure = dataBaseReader.getTableStructure(conn, "blog", "django_admin_log");
         logger.info("表结构为: {}", structure);
         logger.info("生成的创建sql为: {}", structure.getCreateSql());
         DbWriter dbWriter = new DbWriter();
