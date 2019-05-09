@@ -34,14 +34,13 @@ public class SimpleMockWriter implements MockWriter {
         long begin = System.currentTimeMillis();
         int[] ints = jdbcTemplate.batchUpdate(createSql, batchArgs);
         long elapsedTime = System.currentTimeMillis() - begin;
-        logger.info("执行量: {}, 耗时: {}", batchArgs.size(), elapsedTime);
         int count = 0;
-        for (int i = 0; i < ints.length; i++) {
-            if (ints[i] > 0) {
+        for (int anInt : ints) {
+            if (anInt > 0) {
                 count++;
             }
         }
-        logger.info("欲插入: {}, 成功插入: {}, 耗时: {}ms", batchArgs.size(), count, elapsedTime);
+        logger.info("欲插入: {}, 成功插入: {}, 耗时: {}ms, 速率: {} row/ms", batchArgs.size(), count, elapsedTime, ((float) count) / elapsedTime);
         return count;
     }
 
@@ -51,7 +50,7 @@ public class SimpleMockWriter implements MockWriter {
         SimpleMockWriter simpleMockWriter = new SimpleMockWriter();
 
         logger.info("开始插入数据");
-        simpleMockWriter.write(dataBaseReader.getTableStructure(conn, "blog", "student"), 100000);
+        simpleMockWriter.write(dataBaseReader.getTableStructure(conn, "blog", "student"), 10000);
     }
 
     public Object[] genRow(TableStructure structure) {
