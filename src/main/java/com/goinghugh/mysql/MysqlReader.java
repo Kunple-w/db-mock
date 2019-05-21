@@ -1,12 +1,15 @@
 package com.goinghugh.mysql;
 
 import com.goinghugh.dbmock.DbReader;
+import com.goinghugh.dbmock.config.BeanConfig;
 import com.goinghugh.dbmock.constant.DatabaseConst;
 import com.goinghugh.dbmock.model.Column;
 import com.goinghugh.dbmock.model.TableStructure;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -29,8 +32,13 @@ public class MysqlReader implements DbReader {
 
     private String tableNamePattern;
 
-    public MysqlReader(Connection conn, String schemaNamePattern, String tableNamePattern) {
-        this.conn = conn;
+    public MysqlReader(String schemaNamePattern, String tableNamePattern) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(BeanConfig.class);
+        try {
+            this.conn = context.getBean(DataSource.class).getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         this.schemaNamePattern = schemaNamePattern;
         this.tableNamePattern = tableNamePattern;
     }

@@ -4,8 +4,6 @@ import com.goinghugh.dbmock.*;
 import com.goinghugh.mysql.MysqlReader;
 import com.goinghugh.mysql.MysqlWriter;
 
-import java.sql.Connection;
-
 /**
  * runner
  *
@@ -15,8 +13,7 @@ import java.sql.Connection;
 public class DbMockRunner {
     public static void main(String[] args) {
 
-        Connection connect = ConnectFactory.getConnect();
-        DbReader dbReader = new MysqlReader(connect, "blog", "django_admin_log");
+        DbReader dbReader = new MysqlReader("blog", "django_admin_log");
         DbWriter dbWriter = new MysqlWriter(dbReader.read().get(0));
         dbWriter.write(10);
     }
