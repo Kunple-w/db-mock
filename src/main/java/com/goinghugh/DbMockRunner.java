@@ -1,6 +1,8 @@
 package com.goinghugh;
 
 import com.goinghugh.dbmock.*;
+import com.goinghugh.mysql.MysqlReader;
+import com.goinghugh.mysql.MysqlWriter;
 
 import java.sql.Connection;
 

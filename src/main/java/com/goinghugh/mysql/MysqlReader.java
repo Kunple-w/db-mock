@@ -1,5 +1,7 @@
-package com.goinghugh.dbmock;
+package com.goinghugh.mysql;
 
+import com.goinghugh.dbmock.ConnectFactory;
+import com.goinghugh.dbmock.DbReader;
 import com.goinghugh.dbmock.constant.DatabaseConst;
 import com.goinghugh.dbmock.model.Column;
 import com.goinghugh.dbmock.model.TableStructure;

@@ -1,5 +1,6 @@
-package com.goinghugh.dbmock;
+package com.goinghugh.mysql;
 
+import com.goinghugh.dbmock.AbstractWriter;
 import com.goinghugh.dbmock.config.BeanConfig;
 import com.goinghugh.dbmock.model.Column;
 import com.goinghugh.dbmock.model.TableStructure;
