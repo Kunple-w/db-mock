@@ -1,12 +1,9 @@
 package com.goinghugh.mysql;
 
-import com.goinghugh.dbmock.ConnectFactory;
 import com.goinghugh.dbmock.DbReader;
 import com.goinghugh.dbmock.constant.DatabaseConst;
 import com.goinghugh.dbmock.model.Column;
 import com.goinghugh.dbmock.model.TableStructure;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -25,7 +22,6 @@ import java.util.Map;
  * @date 2019-05-21 11:56
  **/
 public class MysqlReader implements DbReader {
-    private static final Logger logger = LoggerFactory.getLogger(MysqlReader.class);
 
     private Connection conn;
 
@@ -81,12 +77,4 @@ public class MysqlReader implements DbReader {
         }
         return columns;
     }
-
-    public static void main(String[] args) {
-        Connection connect = ConnectFactory.getConnect();
-        DbReader reader = new MysqlReader(connect, "blog", "student");
-        List<TableStructure> tables = reader.read();
-        tables.forEach(table -> logger.info("表为: {}", table));
-    }
-
 }
