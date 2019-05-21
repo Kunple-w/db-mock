@@ -12,14 +12,25 @@ import java.util.StringJoiner;
  **/
 public class Column {
 
+    private String tableCat;
+
     private String tableName;
 
     private String columnName;
 
+    /**  
+     * 例如4,对应int类型
+     */  
     private String jdbcType;
 
+    /**  
+     * 例如4, 对应int类型
+     */  
     private Integer dataType;
 
+    /**  
+     * 例如 int
+     */  
     private String typeName;
 
     private Integer columnSize;
@@ -122,13 +133,22 @@ public class Column {
         return generator;
     }
 
-    public void setGenerator(Generator generator) {
+    public String getTableCat() {
+        return tableCat;
+    }
+
+    public void setTableCat(String tableCat) {
+        this.tableCat = tableCat;
+    }
+
+    public void setGenerator(Generator<?> generator) {
         this.generator = generator;
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", Column.class.getSimpleName() + "[", "]")
+                .add("tableCat='" + tableCat + "'")
                 .add("tableName='" + tableName + "'")
                 .add("columnName='" + columnName + "'")
                 .add("jdbcType='" + jdbcType + "'")

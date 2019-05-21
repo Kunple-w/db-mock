@@ -8,6 +8,8 @@ package com.goinghugh.dbmock.constant;
  **/
 public class DatabaseConst {
 
+    public static final String SCHEMA_NAME = "TABLE_SCHEM";
+    public static final String TABLE_CAT = "TABLE_CAT";
     public static final String TABLE_NAME = "TABLE_NAME";
     public static final String COLUMN_NAME = "COLUMN_NAME";
     public static final String DATA_TYPE = "DATA_TYPE";

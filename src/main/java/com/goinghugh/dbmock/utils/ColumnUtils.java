@@ -1,4 +1,4 @@
-package com.goinghugh.dbmock;
+package com.goinghugh.dbmock.utils;
 
 import com.goinghugh.dbmock.generator.Generator;
 import com.goinghugh.dbmock.generator.GeneratorFactory;

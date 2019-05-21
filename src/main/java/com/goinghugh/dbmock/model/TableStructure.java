@@ -21,11 +21,14 @@ public class TableStructure {
 
     private List<Column> columns;
 
+    private String insertSql;
+
 
     public TableStructure(String schemaName, String tableName, List<Column> columns) {
         this.schemaName = schemaName;
         this.tableName = tableName;
         this.columns = columns;
+        this.insertSql = getCreateSql();
     }
 
     public int getPlaceholder() {
@@ -39,7 +42,7 @@ public class TableStructure {
     }
 
     public int getColumnIndex(Column column) {
-        String createSql = getCreateSql();
+        String createSql = getInsertSql();
         Matcher matcher = pattern.matcher(createSql);
         if (matcher.find()) {
             String col = matcher.group(1);
@@ -53,7 +56,7 @@ public class TableStructure {
         throw new IllegalArgumentException("列有误");
     }
 
-    public String getCreateSql() {
+    private String getCreateSql() {
         // insert into joke (gid,name)value(0,"joker");
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO ");
@@ -75,6 +78,13 @@ public class TableStructure {
         return sb.toString();
     }
 
+    public String getInsertSql() {
+        return insertSql;
+    }
+
+    public void setInsertSql(String insertSql) {
+        this.insertSql = insertSql;
+    }
 
     public String getSchemaName() {
         return schemaName;
